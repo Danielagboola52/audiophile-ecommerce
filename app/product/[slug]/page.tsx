@@ -10,7 +10,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const router = useRouter();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
-  
+
   // Unwrap params
   const { slug } = use(params);
 
@@ -28,17 +28,16 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
     );
   }
 
+  // ✅ FIXED addToCart call (pass everything as ONE object)
   const handleAddToCart = () => {
-    addToCart(
-      {
-        id: product.id,
-        name: product.name,
-        shortName: product.shortName,
-        price: product.price,
-        image: product.images.mobile,
-      },
-      quantity
-    );
+    addToCart({
+      id: product.id,
+      name: product.name,
+      shortName: product.shortName,
+      price: product.price,
+      image: product.images.mobile,
+      quantity: quantity, // added inside the object
+    });
     alert(`Added ${quantity} ${product.shortName} to cart!`);
   };
 
